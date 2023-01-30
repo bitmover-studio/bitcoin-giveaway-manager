@@ -87,7 +87,7 @@
     </div>
 
     <article class="mt-5">
-      <h2 class="h4 pb-2 mb-4 text-dark border-dark">Provaly fair giveaway manager</h2>
+      <h2 class="h4 pb-2 mb-4 text-dark border-dark">Provably fair giveaway manager</h2>
       <p>
         As the <code>blockhash</code> is just a number, its last 6 digits is converted to <code>decimal</code> using
         this function:</p>
@@ -112,7 +112,7 @@
 
       <p></p>
 
-      <p>For additonal winners, the past winners are removed from the list and one more digit is added from the
+      <p>For additional winners, the past winners are removed from the list and one more digit is added from the
         blockhash. A maximum 30 was added to avoid working with big numbers.</p>
 
     </article>
@@ -190,7 +190,9 @@
         .done(function (blockhash) {
           if (document.getElementById("n_winners").value > 1 && document.getElementById("n_winners").value < 31) {
             for (let step = 1; step < document.getElementById("n_winners").value; step++) {
-              let n_winner_decimal = parseInt(blockhash.slice(-(6 + step)), 16)
+              // As suggested by PowerGlove
+              let n_winner_decimal = parseInt(blockhash.slice(-(6 + step), blockhash.length - step), 16)
+              
               let n_winner_index_number = n_winner_decimal % competitors.length
               let n_winner = competitors[n_winner_index_number];
               competitors.splice(n_winner_index_number, 1)
